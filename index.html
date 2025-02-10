@@ -1,135 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Custo de Combustível</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
             background-color: #2d56ea;
-        }
-
-        #container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        img {
-            width: 500px;
-            height: 200px;
-            margin: 0 auto;
-            display: block;
-        }
-
-        h1 {
-            font-size: 30px;
-            margin-top: 10px;
             color: #fff;
+            text-align: center;
+            padding: 20px;
         }
 
-        h2 {
-            font-size: 30px;
-            margin-top: 10px;
-            color: #fff;
-        }
-
-        h3 {
-            font-size: 30px;
-            margin-top: 10px;
-            color: #fff;
+        h1, h2, h3 {
+            margin: 10px 0;
         }
 
         label {
             display: block;
-            font-size: 30px;
-            color: #fff;
-            margin-top: 30px;
+            font-size: 20px;
+            margin-top: 20px;
         }
 
         input {
-            
-            font-size: 30px;
-            color: #080808;
+            font-size: 18px;
+            padding: 10px;
             margin-top: 10px;
-            align-items: center;
+            width: 80%;
+            max-width: 300px;
         }
 
         button {
-            
-            font-size: 30px;
-            color: #080808;
-            margin-top: 30px;
-            align-items: center;
-        }
-
-        select {
-            display: block;
             font-size: 20px;
-            color: #0a0a0a;
-            margin-top: 30px;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
         }
 
-        #password {
-            width: 650px;
-            padding: 10px;
-            margin: 10px;
-            font-size: 18px;
-            text-align: center;
-        }
-
-        #generate-button,
-        #clear-button,
-        #copy-button {
-            padding: 10px 40px;
-            margin: 5px;
-            font-size: 16px;
+        .resultado {
+            font-size: 24px;
+            margin-top: 20px;
         }
     </style>
-    <meta charset="UTF-8">
-    
-    <title>Calculadora de Custo de Combustível Total, por Pessoa e por Dia</title>
 </head>
 <body>
     <h1>CGS Tecnologia</h1>
-    <h2>Calculadora de Custo de Combustível Total, por Pessoa e por Dia</h2>
-    <label for="distancia">Distância em KM por dia:</label>
+    <h2>Calculadora de Custo de Combustível</h2>
+
+    <label for="distancia">Distância diária (KM):</label>
     <input type="number" id="distancia" required>
-    <br>
+
     <label for="consumo">Consumo do carro (KM/litro):</label>
     <input type="number" id="consumo" step="0.01" required>
-    <br>
+
     <label for="valorGasolina">Valor da Gasolina (R$/litro):</label>
     <input type="number" id="valorGasolina" step="0.01" required>
-    <br>
+
     <label for="quantidadePessoas">Quantidade de Pessoas:</label>
     <input type="number" id="quantidadePessoas" required>
-    <br>
+
     <label for="quantidadeDias">Quantidade de Dias:</label>
     <input type="number" id="quantidadeDias" required>
-    <br>
+
     <button onclick="calcularCustos()">Calcular Custos</button>
-    <h3>Valor Total para toda a viagem: R$ <span id="resultadoTotal">0</span></h3>
-    <h3>Valor por Pessoa para toda a viagem: R$ <span id="resultadoPorPessoa">0</span></h3>
+
+    <h3 class="resultado">Valor Total: R$ <span id="resultadoTotal">0</span></h3>
+    <h3 class="resultado">Valor por Pessoa: R$ <span id="resultadoPorPessoa">0</span></h3>
 
     <script>
         function calcularCustos() {
-            // Obtem os valores inseridos pelo usuário
-            var distanciaPorDia = document.getElementById('distancia').value;
-            var consumo = document.getElementById('consumo').value;
-            var valorGasolina = document.getElementById('valorGasolina').value;
-            var quantidadePessoas = document.getElementById('quantidadePessoas').value;
-            var quantidadeDias = document.getElementById('quantidadeDias').value;
+            const distanciaPorDia = parseFloat(document.getElementById('distancia').value);
+            const consumo = parseFloat(document.getElementById('consumo').value);
+            const valorGasolina = parseFloat(document.getElementById('valorGasolina').value);
+            const quantidadePessoas = parseInt(document.getElementById('quantidadePessoas').value);
+            const quantidadeDias = parseInt(document.getElementById('quantidadeDias').value);
 
-            // Calcula o custo total considerando todos os dias
-            var custoTotal = (distanciaPorDia * quantidadeDias / consumo) * valorGasolina;
+            const custoTotal = (distanciaPorDia * quantidadeDias / consumo) * valorGasolina;
+            const custoPorPessoa = custoTotal / quantidadePessoas;
 
-            // Divide o custo total pela quantidade de pessoas
-            var custoPorPessoa = custoTotal / quantidadePessoas;
-
-            // Atualiza os resultados na página
-            document.getElementById('resultadoTotal').innerText = custoTotal.toFixed(2);
-            document.getElementById('resultadoPorPessoa').innerText = custoPorPessoa.toFixed(2);
+            document.getElementById('resultadoTotal').textContent = custoTotal.toFixed(2);
+            document.getElementById('resultadoPorPessoa').textContent = custoPorPessoa.toFixed(2);
         }
     </script>
 </body>
